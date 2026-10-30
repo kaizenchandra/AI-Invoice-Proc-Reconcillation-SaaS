@@ -1,0 +1,45 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Frontend: dev",
+			"type": "shell",
+			"command": "npm run dev",
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Frontend: build",
+			"type": "shell",
+			"command": "npm run build",
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Backend: verify",
+			"type": "shell",
+			"command": "./mvnw verify",
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "Backend: synthetic E2E server",
+			"type": "shell",
+			"command": "./scripts/run-backend.sh",
+			"args": [
+				"test-fixtures"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

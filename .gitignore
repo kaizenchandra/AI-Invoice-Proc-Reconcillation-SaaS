@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+target/
+.env
+.env.local
+*.log
+playwright-report/
+test-results/
+.DS_Store
+.tools/

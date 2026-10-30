@@ -1,0 +1,2 @@
+number,supplierId,date,code,description,quantity,price,taxRate
+PO-2026-001,REPLACE_WITH_TENANT_SUPPLIER_UUID,2026-10-01,STEEL-01,Steel brackets,10,100.00,18

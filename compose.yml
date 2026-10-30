@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_DB: invoice
+      POSTGRES_USER: invoice
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?Set DATABASE_PASSWORD in .env}
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invoice"]
+      interval: 5s
+      retries: 20
+  storage:
+    image: localstack/localstack:4.10.0
+    environment:
+      SERVICES: s3
+      PERSISTENCE: 1
+      AWS_DEFAULT_REGION: ap-south-1
+    ports: ["127.0.0.1:9000:4566"]
+    volumes: ["object-data:/var/lib/localstack", "./infra/init-storage.sh:/etc/localstack/init/ready.d/init-storage.sh:ro"]
+  clamav:
+    image: clamav/clamav:1.4.3
+    ports: ["127.0.0.1:3310:3310"]
+    volumes: ["clamav-data:/var/lib/clamav"]
+  backend:
+    build: ./backend
+    depends_on:
+      db: {condition: service_healthy}
+      storage: {condition: service_started}
+      clamav: {condition: service_started}
+    env_file: .env
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/invoice
+      SERVER_PORT: 8080
+      S3_ENDPOINT: http://storage:4566
+      CLAMAV_HOST: clamav
+    ports: ["127.0.0.1:8187:8080"]
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    environment:
+      BACKEND_URL: http://backend:8080
+    ports: ["127.0.0.1:3107:3000"]
+volumes:
+  postgres-data:
+  object-data:
+  clamav-data:

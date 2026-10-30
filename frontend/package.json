@@ -1,0 +1,34 @@
+{
+  "name": "kaizen-invoice-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3107",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "playwright test",
+    "contracts": "openapi-typescript http://127.0.0.1:8187/v3/api-docs -o src/lib/api-schema.d.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.90.5",
+    "lucide-react": "0.468.0",
+    "next": "16.4.3",
+    "pdfjs-dist": "5.4.296",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.1",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.4.3",
+    "openapi-typescript": "7.10.1",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}
